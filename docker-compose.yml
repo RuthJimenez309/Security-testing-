@@ -1,0 +1,14 @@
+version: " 3.8\
+services:
+ db:
+ image: mysql:8.0
+ container_name: mysql-vulnerable-db
+ environment:
+ MYSQL_ROOT_PASSWORD: rootpassword
+ MYSQL_DATABASE: security_lab
+ MYSQL_USER: lab_user
+ MYSQL_PASSWORD: lab_password
+ ports:
+ - \3306:3306\
+ volumes:
+ - ./init.sql:/docker-entrypoint-initdb.d/init.sql
