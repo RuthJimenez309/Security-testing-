@@ -1,13 +1,17 @@
-# MySQL Security Lab: Offensive Exploitation & Defensive Patching
+# Lab de Seguridad: Mitigación de SQL Injection 
 
-Este proyecto es un laboratorio practico  controlado de pruebas ofensivas y contramedidas defensivas en Node.js, TypeScript y MySQL.
+Laboratorio práctico de Auditoría Ofensiva y Defensa Backend.
 
-## Arquitectura del Proyecto
-- **Laboratorio Inseguro**: Endpoint vulnerable a SQL Injection mediante concatenacion directa de strings.
-- **Motor de Explotacion**: Automation script en TypeScript enfocado en evadir autenticacion y extraer datos.
-- **Módulo Defensivo**: Capa segura implementando consultas parametrizadas (Prepared Statements) verificada mediante Playwright.
+## Tecnologías
+- **Backend:** Node.js, Express, TypeScript
+- **Base de Datos:** MySQL (Docker Container)
+- **Driver:** mysql2/promise (Consultas Preparadas)
 
-## Estado Actual (Dia 1)
-- Infraestructura de base de datos MySQL aislada en Docker.
-- Esquema de base de datos con datos semilla y banderas de auditoria.
-- Configuracion inicial de dependencias del entorno de ejecucion.
+## ?? Hallazgos de Seguridad
+Se detecto una vulnerabilidad crítica de **SQL Injection** en el endpoint de autenticación (/api/login) debido a la concatenación directa de variables en la consulta nativa de la base de datos.
+
+## ??? Mitigación Defensiva
+El backend fue blindado utilizando **Consultas Preparadas (Prepared Statements)** mediante el método .execute(). Esto separa estrictamente el código de los datos del usuario, neutralizando cualquier intento de manipulación lógica (vuelto inmune a payloads como ' OR '1'='1).
+
+##  Verificación
+El script de explotación (	est-exploit.js) ahora es rechazado de forma segura devolviendo un **HTTP Status Code 401 (Unauthorized)** en lugar de un colapso interno 500 o la fuga de registros.
